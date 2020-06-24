@@ -10,6 +10,17 @@ class Question extends StatelessWidget {
   // render
   @override
   Widget build(BuildContext context) {
-    return Text(this.questionText);
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.all(10),
+      child: Text(
+        this.questionText,
+        style: TextStyle(
+          fontSize: 24,
+        ),
+        textAlign: TextAlign
+            .center, // by default Text width is same as text it contains, "display: inline"
+      ),
+    );
   }
 }

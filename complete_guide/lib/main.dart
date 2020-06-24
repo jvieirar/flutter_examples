@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import './question.dart';
+import './answer.dart';
 
 void main() => runApp(App());
 
@@ -12,13 +13,19 @@ class App extends StatefulWidget {
 class _AppState extends State<App> {
   // properties
   var _questions = [
-    'What\'s your favorite colour?',
-    'What\'s your favorite animal?'
+    {
+      'questionText': 'What\'s your favorite colour?',
+      'answers': ['Red', 'Blue', 'Green', 'Pink']
+    },
+    {
+      'questionText': 'What\'s your favorite animal?',
+      'answers': ['Cat', 'Dog', 'Horse', 'Lion']
+    }
   ];
   var _questionIndex = 0;
 
   // methods
-  void answerQuestion() {
+  void _answerQuestion() {
     setState(() {
       _questionIndex++;
     });
@@ -34,26 +41,10 @@ class _AppState extends State<App> {
         body: Column(
           children: <Widget>[
             Question(
-              _questions[_questionIndex],
+              this._questions[_questionIndex]['questionText'],
             ),
-            RaisedButton(
-              child: Text('Answer 1'),
-              onPressed: answerQuestion,
-              // example for annonymous functions
-              // onPressed: () => print('Answer 1'),
-              // onPressed: () {
-              //   // ...
-              //   print('Answer 1');
-              // },
-            ),
-            RaisedButton(
-              child: Text('Answer 2'),
-              onPressed: answerQuestion,
-            ),
-            RaisedButton(
-              child: Text('Answer 3'),
-              onPressed: answerQuestion,
-            ),
+            ...(this._questions[_questionIndex]['answers'] as List<String>)
+                .map((answer) => Answer(answer, _answerQuestion)),
           ],
         ),
       ),
