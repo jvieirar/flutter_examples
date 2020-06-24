@@ -12,7 +12,7 @@ class App extends StatefulWidget {
 
 class _AppState extends State<App> {
   // properties
-  var _questions = [
+  var _questions = const [
     {
       'questionText': 'What\'s your favorite colour?',
       'answers': ['Red', 'Blue', 'Green', 'Pink']
@@ -27,7 +27,11 @@ class _AppState extends State<App> {
   // methods
   void _answerQuestion() {
     setState(() {
+      // if (this._questionIndex < this._questions.length - 1) {
       _questionIndex++;
+      // } else {
+      // _questionIndex = 0;
+      // }
     });
   }
 
@@ -38,15 +42,20 @@ class _AppState extends State<App> {
         appBar: AppBar(
           title: Text('My first App'),
         ),
-        body: Column(
-          children: <Widget>[
-            Question(
-              this._questions[_questionIndex]['questionText'],
-            ),
-            ...(this._questions[_questionIndex]['answers'] as List<String>)
-                .map((answer) => Answer(answer, _answerQuestion)),
-          ],
-        ),
+        body: this._questionIndex < this._questions.length
+            ? Column(
+                children: <Widget>[
+                  Question(
+                    this._questions[_questionIndex]['questionText'],
+                  ),
+                  ...(this._questions[_questionIndex]['answers']
+                          as List<String>)
+                      .map((answer) => Answer(answer, _answerQuestion)),
+                ],
+              )
+            : Center(
+                child: Text('You did it!'),
+              ),
       ),
     );
   }
