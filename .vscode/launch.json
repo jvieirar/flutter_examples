@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "flutter_assignment_1/lib/main.dart",
+      "program": "ml_kit_scanner/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }
