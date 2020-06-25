@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "152152876021",
+    "firebase_url": "https://ml-kit-sscc-test.firebaseio.com",
+    "project_id": "ml-kit-sscc-test",
+    "storage_bucket": "ml-kit-sscc-test.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:152152876021:android:123dfb2b1876bd592176bc",
+        "android_client_info": {
+          "package_name": "com.grawar.scanner"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "152152876021-nb520ighi25ai1rvrribbnj6o0m4bced.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC7S4U5FZk0m6hbtRpTiSG1HCLp4r5Uu3s"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "152152876021-nb520ighi25ai1rvrribbnj6o0m4bced.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
