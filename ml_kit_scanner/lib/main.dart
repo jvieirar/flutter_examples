@@ -19,51 +19,48 @@ class ScanApp extends StatefulWidget {
 
 class _ScanAppState extends State<ScanApp> {
   // properties
-  File _imageFile;
-  List<Face> _faces;
-  List<Barcode> _barcodes;
-  final ImagePicker _picker = ImagePicker();
+  File _image;
+  final picker = ImagePicker();
 
   // constructors
 
   // methods
-  void _getImageAndDetectFaces() async {
-    final imageFile = await _picker.getImage(source: ImageSource.gallery);
-    final image = FirebaseVisionImage.fromFile(File(imageFile.path));
-    final faceDetector = FirebaseVision.instance.faceDetector(
-      FaceDetectorOptions(
-        mode: FaceDetectorMode.accurate,
-      ),
-    );
-    final faces = await faceDetector.processImage(image);
+  Future pickImage() async {
+    // load image
+    final pickedFile = await picker.getImage(source: ImageSource.gallery);
 
-    // update state only if app mounted
     if (mounted) {
       setState(() {
-        _imageFile = File(imageFile.path);
-        _faces = faces;
+        _image = File(pickedFile.path);
       });
     }
+    // await readOCR();
+    // await readBarcode();
   }
 
-  void _getImageAndDetectBarcodes() async {
-    final imageFile = await _picker.getImage(source: ImageSource.gallery);
-    final image = FirebaseVisionImage.fromFile(File(imageFile.path));
-    final barcodeDetector = FirebaseVision.instance.barcodeDetector(
-      BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.code128),
-    );
-    final barcodes = await barcodeDetector.detectInImage(image);
-    print('barcodes detected: ${barcodes.length}');
-    print(barcodes != null && barcodes.length > 0
-        ? '${barcodes[0].rawValue}'
-        : 'No barcodes');
+  Future readOCR() async {
+    FirebaseVisionImage image = FirebaseVisionImage.fromFile(_image);
+    TextRecognizer recognizer = FirebaseVision.instance.textRecognizer();
+    VisionText readText = await recognizer.processImage(image);
+    print('Text recognized: ${readText.text}');
+  }
 
-    // update state only if app mounted
-    if (mounted) {
-      setState(() {
-        _imageFile = File(imageFile.path);
-        _barcodes = barcodes;
-      });
+  Future readBarcode() async {
+    FirebaseVisionImage image = FirebaseVisionImage.fromFile(_image);
+    var barcodeDetector = FirebaseVision.instance.barcodeDetector(
+      BarcodeDetectorOptions(barcodeFormats: BarcodeFormat.all),
+    );
+    var barcodes = await barcodeDetector.detectInImage(image);
+
+    if (barcodes != null) {
+      print('Barcodes found');
+      print('Barcodes found: ${barcodes.length}');
+
+      for (Barcode barcode in barcodes) {
+        print(barcode.displayValue);
+      }
+    } else {
+      print('No barcodes found');
     }
   }
 
@@ -74,87 +71,37 @@ class _ScanAppState extends State<ScanApp> {
       appBar: AppBar(
         title: Text('Scann App'),
       ),
-      body: Center(
-        child: _imageFile != null && _barcodes != null
-            ? Column(
-                children: <Widget>[
-                  Image.file(
-                    _imageFile,
-                  ),
-                  ..._barcodes.map(
-                      (barcode) => ListTile(title: Text(barcode.displayValue))),
-                ],
-              )
-            : Text('Select an image'),
+      body: Column(
+        children: <Widget>[
+          Center(
+            child: _image != null
+                ? Container(
+                    height: 300.0,
+                    width: 300.0,
+                    decoration: BoxDecoration(
+                      image: DecorationImage(
+                        image: FileImage(_image),
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                  )
+                : Text('Select an image'),
+          ),
+          RaisedButton(
+            child: Text('Scan Text'),
+            onPressed: readOCR,
+          ),
+          RaisedButton(
+            child: Text('Scan Barcode'),
+            onPressed: readBarcode,
+          ),
+        ],
       ),
-      // body: ImageAndFaces(
-      //   imageFile: _imageFile,
-      //   faces: _faces,
-      // ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _getImageAndDetectBarcodes,
+        onPressed: pickImage,
         tooltip: 'Pick an image',
         child: Icon(Icons.add_a_photo),
       ),
     );
   }
 }
-
-// class ImageAndFaces extends StatelessWidget {
-//   // properties
-//   final File imageFile;
-//   final List<Face> faces;
-
-//   // constructors
-//   ImageAndFaces({this.imageFile, this.faces});
-
-//   // methods
-
-//   // render
-//   @override
-//   Widget build(BuildContext context) {
-//     return Column(
-//       children: <Widget>[
-//         Flexible(
-//           flex: 2,
-//           child: Container(
-//             constraints: BoxConstraints.expand(),
-//             child: imageFile != null
-//                 ? Image.file(
-//                     imageFile,
-//                     // fit: BoxFit.cover,
-//                   )
-//                 : Text(''),
-//           ),
-//         ),
-//         Flexible(
-//           flex: 1,
-//           child: ListView(
-//             children: faces != null
-//                 ? faces.map((f) => FaceCoordinates(f)).toList()
-//                 : <Widget>[],
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-// }
-
-// class FaceCoordinates extends StatelessWidget {
-//   // properties
-//   final Face face;
-
-//   // constructors
-//   FaceCoordinates(this.face);
-
-//   // methods
-
-//   // render
-//   @override
-//   Widget build(BuildContext context) {
-//     final pos = face.boundingBox;
-//     return ListTile(
-//       title: Text('(${pos.top}, ${pos.left}), (${pos.bottom}, ${pos.right})'),
-//     );
-//   }
-// }
