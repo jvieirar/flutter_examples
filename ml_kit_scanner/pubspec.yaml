@@ -17,7 +17,7 @@ dependencies:
   cupertino_icons: ^0.1.3
 
   image_picker: ^0.6.7+2
-  firebase_ml_vision: ^0.9.4
+  firebase_ml_vision:
   cloud_firestore: ^0.13.7
 
 # The following section is specific to Flutter.
