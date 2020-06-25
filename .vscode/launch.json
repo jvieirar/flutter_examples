@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "ml_kit_scanner/lib/main.dart",
+      "program": "barcode_scan_app/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }
