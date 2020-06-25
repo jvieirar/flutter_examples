@@ -1,4 +1,4 @@
-package com.example.barcode_scan_app
+package com.grawar.barcode_scan_app
 
 import io.flutter.embedding.android.FlutterActivity
 
