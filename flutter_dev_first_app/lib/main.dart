@@ -3,11 +3,26 @@ import 'package:english_words/english_words.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatefulWidget {
-  _MyAppState createState() => _MyAppState();
+class MyApp extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Startup names generator',
+      home: MyHomePage('Startup names generator'),
+    );
+  }
 }
 
-class _MyAppState extends State<MyApp> {
+class MyHomePage extends StatefulWidget {
+  final String title;
+
+  MyHomePage(this.title);
+
+  @override
+  _MyHomePageState createState() => _MyHomePageState();
+}
+
+class _MyHomePageState extends State<MyHomePage> {
   // properties
   final _suggestions = <WordPair>[];
   final _biggerFont = TextStyle(fontSize: 18.0);
@@ -16,6 +31,32 @@ class _MyAppState extends State<MyApp> {
   // constructors
 
   // methods
+  void _pushSaved() {
+    Navigator.of(context)
+        .push(MaterialPageRoute<void>(builder: (BuildContext context) {
+      final tiles = _saved.map((WordPair pair) {
+        return ListTile(
+          title: Text(
+            pair.asPascalCase,
+            style: _biggerFont,
+          ),
+        );
+      });
+      final divided =
+          ListTile.divideTiles(context: context, tiles: tiles).toList();
+
+      return Scaffold(
+        appBar: AppBar(
+          title: Text('Saved Suggestions'),
+        ),
+        body: ListView(
+          children: divided,
+        ),
+      );
+    }));
+  }
+
+  // render
   Widget _buildSuggestions() {
     return ListView.builder(
       padding: EdgeInsets.all(16.0),
@@ -52,17 +93,19 @@ class _MyAppState extends State<MyApp> {
     );
   }
 
-  // render
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Startup name generator',
-      home: Scaffold(
-        appBar: AppBar(
-          title: Text('Startup name generator'),
-        ),
-        body: _buildSuggestions(),
+    return Scaffold(
+      appBar: AppBar(
+        title: Text(widget.title),
+        actions: <Widget>[
+          IconButton(
+            icon: Icon(Icons.list),
+            onPressed: _pushSaved,
+          ),
+        ],
       ),
+      body: _buildSuggestions(),
     );
   }
 }
