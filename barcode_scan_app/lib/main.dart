@@ -38,6 +38,7 @@ class _MyHomePageState extends State<MyHomePage> {
   Future scanBarcode() async {
     try {
       ScanResult barcode = await BarcodeScanner.scan();
+      BarcodeScanner.
       if (mounted) {
         setState(() {
           _barcode = barcode.rawContent;

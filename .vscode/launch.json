@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "flutter_dev_first_app/lib/main.dart",
+      "program": "barcode_scann_example/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }
