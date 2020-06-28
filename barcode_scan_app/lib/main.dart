@@ -1,6 +1,11 @@
+import 'package:barcode_scan_app/service/parcel_service.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter/scheduler.dart';
+
+import './widgets/parcel_list.dart';
+import 'model/parcel.dart';
 
 void main() {
   runApp(MyApp());
@@ -33,22 +38,63 @@ class MyHomePage extends StatefulWidget {
 class _MyHomePageState extends State<MyHomePage> {
   // properties
   String _barcode = '';
+  List<Parcel> _parcels = [];
+  final _parcelService = ParcelService();
 
   // methods
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   SchedulerBinding.instance.addPostFrameCallback((_) async {
+  //     _parcels = await _parcelService.getAllParcels();
+  //   });
+  // }
+
   Future scanBarcode() async {
     try {
       ScanResult barcode = await BarcodeScanner.scan();
-      BarcodeScanner.
       if (mounted) {
         setState(() {
           _barcode = barcode.rawContent;
         });
+        await _showScanDialog(barcode.rawContent);
       }
     } catch (e) {
       setState(() {
         _barcode = e.toString();
       });
     }
+  }
+
+  Future<void> _showScanDialog(String result) async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: Text('Agent information'),
+          content: SingleChildScrollView(
+            child: Text(result),
+          ),
+          actions: <Widget>[
+            FlatButton(
+              child: Text('Close'),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+            RaisedButton(
+              child: Text('Continue scanning'),
+              onPressed: () {
+                scanBarcode();
+                Navigator.of(context).pop();
+              },
+              color: Color.fromRGBO(245, 124, 40, 1),
+            ),
+          ],
+        );
+      },
+    );
   }
 
   // render
@@ -60,23 +106,38 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(245, 124, 40, 1),
       ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'Barcode:',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-            Text(
-              _barcode,
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
-        ),
+      body: FutureBuilder<List<Parcel>>(
+        future: _parcelService.getAllParcels(),
+        builder: (BuildContext context, AsyncSnapshot<List<Parcel>> snapshot) {
+          if (snapshot.connectionState == ConnectionState.done) {
+            // setState(() {
+            //   _parcels = snapshot.data;
+            // });
+            return ParcelList(snapshot.data);
+          } else {
+            return Text('Loading...');
+          }
+        },
       ),
+      // body: ParcelList(_parcels),
+      // body: Center(
+      //   child: Column(
+      //     mainAxisAlignment: MainAxisAlignment.center,
+      //     children: <Widget>[
+      //       Text(
+      //         'Barcode:',
+      //         style: Theme.of(context).textTheme.headline4,
+      //       ),
+      //       Text(
+      //         _barcode,
+      //         style: Theme.of(context).textTheme.headline4,
+      //       ),
+      //     ],
+      //   ),
+      // ),
       floatingActionButton: FloatingActionButton(
-        onPressed: scanBarcode,
+        // onPressed: scanBarcode,
+        onPressed: () async => await _showScanDialog('Hi there'),
         tooltip: 'Scan',
         child: SvgPicture.string(
           '''<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
