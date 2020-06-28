@@ -3,7 +3,7 @@ import '../model/agent.dart';
 
 class ParcelService {
   // properties
-  final List<Parcel> _parcels = [
+  static final List<Parcel> _parcels = [
     Parcel(
       consignmentRef: '123412341234134',
       externalId: 'PP0001',
@@ -34,7 +34,7 @@ class ParcelService {
   // constructors
 
   // methods
-  Future<List<Parcel>> getAllParcels() async {
+  static Future<List<Parcel>> getAllParcels() async {
     return _parcels;
   }
 

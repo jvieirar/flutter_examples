@@ -2,7 +2,6 @@ import 'package:barcode_scan_app/service/parcel_service.dart';
 import 'package:flutter/material.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-import 'package:flutter/scheduler.dart';
 
 import './widgets/parcel_list.dart';
 import 'model/parcel.dart';
@@ -21,25 +20,60 @@ class MyApp extends StatelessWidget {
         primarySwatch: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
-      home: MyHomePage(title: 'Parcelpoint Scanner App'),
+      // home: MyHomePage(title: 'Parcelpoint Scanner App'),
+      home: FutureBuilder<List<Parcel>>(
+        future: ParcelService.getAllParcels(),
+        builder: (BuildContext context, AsyncSnapshot<List<Parcel>> snapshot) {
+          if (snapshot.hasData) {
+            return MyHomePage(
+                title: 'Parcelpoint Scanner App', parcels: snapshot.data);
+          } else {
+            return Scaffold(
+              appBar: AppBar(
+                title: Text('Parcelpoint Scanner App'),
+                centerTitle: true,
+                backgroundColor: Color.fromRGBO(245, 124, 40, 1),
+              ),
+              body: CircularProgressIndicator(),
+              floatingActionButton: FloatingActionButton(
+                // onPressed: scanBarcode,
+                onPressed: () {},
+                tooltip: 'Scan',
+                child: SvgPicture.string(
+                  '''<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="black" width="18px" height="18px">
+  <rect fill="none" height="24" width="24" />
+  <path d="M9.5,6.5v3h-3v-3H9.5 M11,5H5v6h6V5L11,5z M9.5,14.5v3h-3v-3H9.5 M11,13H5v6h6V13L11,13z M17.5,6.5v3h-3v-3H17.5 M19,5h-6v6 h6V5L19,5z M13,13h1.5v1.5H13V13z M14.5,14.5H16V16h-1.5V14.5z M16,13h1.5v1.5H16V13z M13,16h1.5v1.5H13V16z M14.5,17.5H16V19h-1.5 V17.5z M16,16h1.5v1.5H16V16z M17.5,14.5H19V16h-1.5V14.5z M17.5,17.5H19V19h-1.5V17.5z M21,7L21,7c-0.55,0-1-0.45-1-1V4h-2 c-0.55,0-1-0.45-1-1v0c0-0.55,0.45-1,1-1h3c0.55,0,1,0.45,1,1v3C22,6.55,21.55,7,21,7z M22,21v-3c0-0.55-0.45-1-1-1h0 c-0.55,0-1,0.45-1,1v2h-2c-0.55,0-1,0.45-1,1v0c0,0.55,0.45,1,1,1h3C21.55,22,22,21.55,22,21z M3,22h3c0.55,0,1-0.45,1-1v0 c0-0.55-0.45-1-1-1H4v-2c0-0.55-0.45-1-1-1h0c-0.55,0-1,0.45-1,1v3C2,21.55,2.45,22,3,22z M2,3v3c0,0.55,0.45,1,1,1h0 c0.55,0,1-0.45,1-1V4h2c0.55,0,1-0.45,1-1v0c0-0.55-0.45-1-1-1H3C2.45,2,2,2.45,2,3z" />
+</svg>''',
+                ),
+                backgroundColor: Color.fromRGBO(245, 124, 40, 1),
+              ),
+            );
+          }
+        },
+      ),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
+  final List<Parcel> parcels;
+
+  MyHomePage({Key key, this.title, this.parcels}) : super(key: key);
 
   final String title;
 
   @override
-  _MyHomePageState createState() => _MyHomePageState();
+  _MyHomePageState createState() => _MyHomePageState(this.parcels);
 }
 
 class _MyHomePageState extends State<MyHomePage> {
   // properties
   String _barcode = '';
-  List<Parcel> _parcels = [];
+  List<Parcel> parcels;
   final _parcelService = ParcelService();
+
+  // constructors
+  _MyHomePageState(this.parcels);
 
   // methods
   // @override
@@ -106,20 +140,20 @@ class _MyHomePageState extends State<MyHomePage> {
         centerTitle: true,
         backgroundColor: Color.fromRGBO(245, 124, 40, 1),
       ),
-      body: FutureBuilder<List<Parcel>>(
-        future: _parcelService.getAllParcels(),
-        builder: (BuildContext context, AsyncSnapshot<List<Parcel>> snapshot) {
-          if (snapshot.connectionState == ConnectionState.done) {
-            // setState(() {
-            //   _parcels = snapshot.data;
-            // });
-            return ParcelList(snapshot.data);
-          } else {
-            return Text('Loading...');
-          }
-        },
-      ),
-      // body: ParcelList(_parcels),
+      // body: FutureBuilder<List<Parcel>>(
+      //   future: _parcelService.getAllParcels(),
+      //   builder: (BuildContext context, AsyncSnapshot<List<Parcel>> snapshot) {
+      //     if (snapshot.hasData) {
+      //       // setState(() {
+      //       //   _parcels = snapshot.data;
+      //       // });
+      //       return ParcelList(snapshot.data);
+      //     } else {
+      //       return CircularProgressIndicator();
+      //     }
+      //   },
+      // ),
+      body: ParcelList(parcels),
       // body: Center(
       //   child: Column(
       //     mainAxisAlignment: MainAxisAlignment.center,
