@@ -20,6 +20,22 @@ class MyApp extends StatelessWidget {
         accentColor: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
         fontFamily: 'Scandia',
+        textTheme: ThemeData.light().textTheme.copyWith(
+              headline6: TextStyle(
+                fontFamily: 'Scandia',
+                fontWeight: FontWeight.bold,
+                fontSize: 18,
+              ),
+            ),
+        appBarTheme: AppBarTheme(
+          textTheme: ThemeData.light().textTheme.copyWith(
+                headline6: TextStyle(
+                  fontFamily: 'Scandia',
+                  // fontWeight: FontWeight.bold,
+                  fontSize: 28,
+                ),
+              ),
+        ),
       ),
       home: MyHomePage(title: 'Personal expenses'),
     );
