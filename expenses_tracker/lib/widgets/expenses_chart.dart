@@ -36,7 +36,7 @@ class ExpensesChart extends StatelessWidget {
         'day': DateFormat.E().format(weekDay).substring(0, 2),
         'amount': totalAmountToday
       };
-    });
+    }).reversed.toList();
   }
 
   double get totalSpenings {
@@ -52,12 +52,13 @@ class ExpensesChart extends StatelessWidget {
   // render
   @override
   Widget build(BuildContext context) {
-    print(groupedTransactions);
-    return Card(
-      child: Container(
-        width: double.infinity,
-        child: Container(
-          padding: EdgeInsets.all(10),
+    return Container(
+      width: double.infinity,
+      margin: EdgeInsets.symmetric(vertical: 10, horizontal: 8),
+      child: Card(
+        elevation: 6,
+        child: Padding(
+          padding: EdgeInsets.symmetric(vertical: 15, horizontal: 10),
           child: Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: groupedTransactions
@@ -77,7 +78,6 @@ class ExpensesChart extends StatelessWidget {
           ),
         ),
       ),
-      elevation: 6,
     );
   }
 }
