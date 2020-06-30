@@ -56,18 +56,25 @@ class ExpensesChart extends StatelessWidget {
     return Card(
       child: Container(
         width: double.infinity,
-        child: Row(
-          children: groupedTransactions
-              .map(
-                (data) => ExpensesChartBar(
-                  label: data['day'],
-                  spendingAmount: data['amount'],
-                  spendingPercentageTotal: totalSpenings == 0.0
-                      ? 0.0
-                      : (data['amount'] as double) / totalSpenings,
-                ),
-              )
-              .toList(),
+        child: Container(
+          padding: EdgeInsets.all(10),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.spaceAround,
+            children: groupedTransactions
+                .map(
+                  (data) => Flexible(
+                    fit: FlexFit.tight,
+                    child: ExpensesChartBar(
+                      label: data['day'],
+                      spendingAmount: data['amount'],
+                      spendingPercentageTotal: totalSpenings == 0.0
+                          ? 0.0
+                          : (data['amount'] as double) / totalSpenings,
+                    ),
+                  ),
+                )
+                .toList(),
+          ),
         ),
       ),
       elevation: 6,
