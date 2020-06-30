@@ -19,6 +19,7 @@ class MyApp extends StatelessWidget {
         // primaryColor: Colors.black,
         accentColor: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
+        fontFamily: 'Scandia',
       ),
       home: MyHomePage(title: 'Personal expenses'),
     );
