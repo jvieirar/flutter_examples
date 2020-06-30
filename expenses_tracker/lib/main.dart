@@ -54,6 +54,9 @@ class _MyHomePageState extends State<MyHomePage> {
     ),
   ];
 
+  String titleInput;
+  String amountInput;
+
   // methods
 
   // render
@@ -64,15 +67,41 @@ class _MyHomePageState extends State<MyHomePage> {
         title: Text(widget.title),
       ),
       body: Column(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.start,
+        // mainAxisAlignment: MainAxisAlignment.spaceBetween,
         // crossAxisAlignment: CrossAxisAlignment.stretch,
         children: <Widget>[
           Card(
             child: Container(
               width: double.infinity,
-              child: Text('Chart!'),
+              child: Text('Chart!, $titleInput, $amountInput'),
             ),
             elevation: 5,
+          ),
+          Card(
+            child: Container(
+              padding: EdgeInsets.all(10),
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.end,
+                children: <Widget>[
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Title'),
+                    onChanged: (value) => setState(() => titleInput = value),
+                  ),
+                  TextField(
+                    decoration: InputDecoration(labelText: 'Amount'),
+                    onChanged: (value) => setState(() => amountInput = value),
+                  ),
+                  FlatButton(
+                    child: Text(
+                      'Add transaction',
+                      style: TextStyle(color: Colors.purple),
+                    ),
+                    onPressed: () {},
+                  )
+                ],
+              ),
+            ),
           ),
           Column(
             children: transactions
