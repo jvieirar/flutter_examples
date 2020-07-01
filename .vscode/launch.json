@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "barcode_scan_app/lib/main.dart",
+      "program": "parcelpoint_operations_app/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }

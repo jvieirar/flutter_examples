@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="24px" height="16px" viewBox="0 0 24 16" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
+    <title>barcode</title>
+    <g id="Symbols" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g id="Parcel-List-Item-(Desktop)-(C&amp;C)" transform="translate(-43.000000, -75.000000)" fill="#dfdfe0" fill-rule="nonzero">
+            <g id="Group-9" transform="translate(43.000000, 69.000000)">
+                <g id="barcode" transform="translate(0.000000, 6.000000)">
+                    <rect id="Rectangle" x="21" y="0" width="3" height="16"></rect>
+                    <rect id="Rectangle" x="0" y="0" width="3" height="16"></rect>
+                    <rect id="Rectangle" x="10" y="0" width="3" height="16"></rect>
+                    <rect id="Rectangle" x="4" y="0" width="5" height="16"></rect>
+                    <rect id="Rectangle" x="14" y="0" width="5" height="16"></rect>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
