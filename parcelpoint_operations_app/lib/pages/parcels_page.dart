@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+// import 'package:flutter_svg/svg.dart';
 import 'package:barcode_scan/barcode_scan.dart';
 
 import '../model/parcel.dart';
 import '../widgets/parcel_list_item.dart';
 import '../widgets/scan_dialog.dart';
+import '../shared/icons.dart';
 
 class ParcelPage extends StatefulWidget {
   ParcelPage({Key key, this.title}) : super(key: key);
@@ -17,15 +18,6 @@ class ParcelPage extends StatefulWidget {
 
 class _ParcelPageState extends State<ParcelPage> {
   // properties
-  final Widget _iconParcel = SvgPicture.asset(
-    'assets/images/icon-parcel.svg',
-    semanticsLabel: 'Parcel Icon',
-  );
-  final Widget _iconScan = SvgPicture.asset(
-    'assets/images/icon-qr-barcode.svg',
-    semanticsLabel: 'Scan Icon',
-    color: Colors.white,
-  );
 
   String _barcode = '';
 
@@ -102,37 +94,6 @@ class _ParcelPageState extends State<ParcelPage> {
         });
   }
 
-  // Future<void> _showScanDialog(String result) async {
-  //   return showDialog<void>(
-  //     context: context,
-  //     barrierDismissible: false, // user must tap button!
-  //     builder: (BuildContext context) {
-  //       return AlertDialog(
-  //         title: Text('Agent information'),
-  //         content: SingleChildScrollView(
-  //           child: Text(result),
-  //         ),
-  //         actions: <Widget>[
-  //           FlatButton(
-  //             child: Text('Close'),
-  //             onPressed: () {
-  //               Navigator.of(context).pop();
-  //             },
-  //           ),
-  //           RaisedButton(
-  //             child: Text('Continue scanning'),
-  //             onPressed: () {
-  //               _scanBarcode();
-  //               Navigator.of(context).pop();
-  //             },
-  //             color: Theme.of(context).primaryColor,
-  //           ),
-  //         ],
-  //       );
-  //     },
-  //   );
-  // }
-
   // render
   @override
   Widget build(BuildContext context) {
@@ -146,7 +107,7 @@ class _ParcelPageState extends State<ParcelPage> {
               children: [
                 Container(
                   margin: EdgeInsets.only(right: 8.0),
-                  child: _iconParcel,
+                  child: iconParcel,
                 ),
                 Text(
                   _parcels.length.toString(),
@@ -179,9 +140,9 @@ class _ParcelPageState extends State<ParcelPage> {
         onPressed: () => _showScanDialog(context, 'barcode test'),
         // onPressed: _scanBarcode,
         tooltip: 'Scan',
-        child: _iconScan,
+        child: iconScan,
       ),
-      floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+      // floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
     );
   }
 }
