@@ -69,7 +69,7 @@ class _ParcelPageState extends State<ParcelPage> {
   Parcel _scanedParcel = Parcel(
     externalId: 'PPSZ33K3',
     consignmentRef: '00991234049706',
-    type: 'DELIVERY',
+    type: 'OTHER',
     agentName: 'Bondi Junction Parcelpoint',
     milkrunName: 'SYDNEY CBD',
   );

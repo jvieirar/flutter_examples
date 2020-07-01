@@ -40,9 +40,7 @@ class ScanDialog extends StatelessWidget {
       return TextStyle(color: Colors.white, fontSize: 22);
     } else {
       return TextStyle(
-        color: Colors.black,
-        fontWeight: FontWeight.bold,
-      );
+          color: Colors.black, fontWeight: FontWeight.bold, fontSize: 22);
     }
   }
 
@@ -116,7 +114,7 @@ class ScanDialog extends StatelessWidget {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
-                        _iconLocalDelivery,
+                        if (parcel.type == 'DELIVERY') _iconLocalDelivery,
                         Container(
                           margin: EdgeInsets.only(left: 8.0),
                           child: Text(
