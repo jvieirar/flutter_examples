@@ -87,6 +87,10 @@ class _ParcelPageState extends State<ParcelPage> {
   void _showScanDialog(BuildContext ctx, String barcode) {
     showModalBottomSheet(
         context: ctx,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(10.0), topRight: Radius.circular(10.0)),
+        ),
         builder: (bCtx) {
           return ScanDialog(
             barcode: barcode,
