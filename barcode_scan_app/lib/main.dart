@@ -15,6 +15,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Parcelpoint Scanner App',
       theme: ThemeData(
         primarySwatch: Colors.orange,
@@ -170,8 +171,8 @@ class _MyHomePageState extends State<MyHomePage> {
       //   ),
       // ),
       floatingActionButton: FloatingActionButton(
-        // onPressed: scanBarcode,
-        onPressed: () async => await _showScanDialog('Hi there'),
+        onPressed: scanBarcode,
+        // onPressed: () async => await _showScanDialog('Hi there'),
         tooltip: 'Scan',
         child: SvgPicture.string(
           '''<svg xmlns="http://www.w3.org/2000/svg" enable-background="new 0 0 24 24" viewBox="0 0 24 24" fill="black" width="18px" height="18px">

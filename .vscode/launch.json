@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "expenses_tracker/lib/main.dart",
+      "program": "barcode_scan_app/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }
