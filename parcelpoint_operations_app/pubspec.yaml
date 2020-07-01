@@ -12,7 +12,8 @@ dependencies:
   flutter:
     sdk: flutter
   # cupertino_icons: ^0.1.3
-  flutter_svg: ^0.18.0
+  barcode_scan: ^3.0.1
+  flutter_svg:
   # dartx: ^0.4.2
 
 dev_dependencies:
@@ -28,6 +29,7 @@ flutter:
     - assets/images/icon-parcel.svg
     - assets/images/icon-barcode.svg
     - assets/images/local-delivery-logo.svg
+    - assets/images/icon-qr-barcode.svg
     - assets/images/parcelpoint-stamp.png
 
   # An image asset can refer to one or more resolution-specific "variants", see
