@@ -37,7 +37,7 @@ class _ParcelPageState extends State<ParcelPage> {
       milkrunName: 'INNER WEST',
     ),
     Parcel(
-      externalId: 'PPSZ33K3',
+      externalId: 'PPSZ39T6',
       consignmentRef: '00991234049706',
       type: 'DELIVERY',
       agentName: 'Bondi Junction Parcelpoint',
@@ -66,6 +66,14 @@ class _ParcelPageState extends State<ParcelPage> {
     ),
   ];
 
+  Parcel _scanedParcel = Parcel(
+    externalId: 'PPSZ33K3',
+    consignmentRef: '00991234049706',
+    type: 'DELIVERY',
+    agentName: 'Bondi Junction Parcelpoint',
+    milkrunName: 'SYDNEY CBD',
+  );
+
   // methods
   Future _scanBarcode() async {
     try {
@@ -85,6 +93,7 @@ class _ParcelPageState extends State<ParcelPage> {
   }
 
   void _showScanDialog(BuildContext ctx, String barcode) {
+    _scanedParcel.consignmentRef = barcode;
     showModalBottomSheet(
         context: ctx,
         shape: RoundedRectangleBorder(
@@ -93,7 +102,8 @@ class _ParcelPageState extends State<ParcelPage> {
         ),
         builder: (bCtx) {
           return ScanDialog(
-            barcode: barcode,
+            context: context,
+            parcel: _scanedParcel,
           );
         });
   }
