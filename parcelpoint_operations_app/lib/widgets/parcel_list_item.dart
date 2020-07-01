@@ -46,7 +46,7 @@ class ParcelListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
         child: ListTile(
-          title: Text(parcel.externalId),
+          title: Text(parcel.displayId),
           subtitle: Column(
             children: [
               Row(

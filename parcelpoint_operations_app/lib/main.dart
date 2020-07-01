@@ -65,42 +65,42 @@ class _MyHomePageState extends State<MyHomePage> {
 
   List<Parcel> _parcels = [
     Parcel(
-      externalId: 'PP SZ3 2K2',
+      externalId: 'PPSZ32K2',
       consignmentRef: '00991234049203',
       type: 'DELIVERY',
       agentName: 'Parcelpoint HQ',
       milkrunName: 'EASTER SUBURBS',
     ),
     Parcel(
-      externalId: 'PP SZ3 2K2',
+      externalId: 'PPSZ32K1',
       consignmentRef: '00991234049305',
       type: 'COLLECT_INITIAL_RETAILER',
       agentName: 'Randwick Parcelpoint',
       milkrunName: 'INNER WEST',
     ),
     Parcel(
-      externalId: 'PP SZ3 3K3',
+      externalId: 'PPSZ33K3',
       consignmentRef: '00991234049706',
       type: 'DELIVERY',
       agentName: 'Bondi Junction Parcelpoint',
       milkrunName: 'SYDNEY CBD',
     ),
     Parcel(
-      externalId: 'PP SZ3 4K4',
+      externalId: 'PPSZ34K4',
       consignmentRef: '00991234049907',
       type: 'COLLECT_INITIAL_RETAILER',
       agentName: 'Rakoty Pharmacy Parcelpoint',
       milkrunName: 'EASTER SUBURBS',
     ),
     Parcel(
-      externalId: 'PP SZ3 5K5',
+      externalId: 'PPSZ35K5',
       consignmentRef: '00991234049102',
       type: 'COLLECT_INITIAL_RETAILER',
       agentName: 'Parcelpoint HQ',
       milkrunName: 'EASTER SUBURBS',
     ),
     Parcel(
-      externalId: 'PP SZ3 6K6',
+      externalId: 'PPSZ36K6',
       consignmentRef: '00991234049505',
       type: 'RETURNS',
       agentName: 'Rakoty Pharmacy Parcelpoint',

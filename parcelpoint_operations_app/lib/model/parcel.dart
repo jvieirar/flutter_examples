@@ -1,4 +1,6 @@
 import 'package:flutter/foundation.dart';
+// import 'package:dartx/dartx.dart';
+import '../utils/string_utils.dart';
 
 class Parcel {
   // properties
@@ -20,6 +22,17 @@ class Parcel {
         return 'RETURNS';
       default:
         return type;
+    }
+  }
+
+  String get displayId {
+    if (externalId.length >= 8) {
+      // var id = externalId.split('');
+      // print(id);
+      // return '${id.slice(0, 1).join()} ${id.slice(2, 4).join()} ${id.slice(5).join()}';
+      return '${externalId.slice(0, 2)} ${externalId.slice(2, 5)} ${externalId.slice(5)}';
+    } else {
+      return externalId;
     }
   }
 
