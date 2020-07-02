@@ -10,6 +10,7 @@ class ParcelListItem extends StatelessWidget {
   );
   final Parcel parcel;
   final BuildContext context;
+  final Function onPress;
 
   // getters
   TextStyle get parcelTypeStyle {
@@ -34,7 +35,7 @@ class ParcelListItem extends StatelessWidget {
   }
 
   // constructors
-  ParcelListItem({this.parcel, this.context});
+  ParcelListItem({this.parcel, this.context, this.onPress});
 
   // methods
 
@@ -46,6 +47,7 @@ class ParcelListItem extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 2.0, vertical: 8.0),
         child: ListTile(
+          onTap: () => onPress(parcel),
           title: Text(parcel.displayId),
           subtitle: Column(
             children: [

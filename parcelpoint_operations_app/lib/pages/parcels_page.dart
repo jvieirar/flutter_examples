@@ -110,6 +110,13 @@ class _ParcelPageState extends State<ParcelPage> {
         });
   }
 
+  void _handleParcelOnPress(Parcel parcel) {
+    setState(() {
+      _scanedParcel = parcel;
+    });
+    _showScanDialog(context, parcel);
+  }
+
   // render
   @override
   Widget build(BuildContext context) {
@@ -148,9 +155,9 @@ class _ParcelPageState extends State<ParcelPage> {
           : ListView.builder(
               itemCount: _parcels.length,
               itemBuilder: (context, index) => ParcelListItem(
-                parcel: _parcels[index],
-                context: context,
-              ),
+                  parcel: _parcels[index],
+                  context: context,
+                  onPress: _handleParcelOnPress),
             ),
       floatingActionButton: FloatingActionButton(
         // onPressed: () => _showScanDialog(context, 'barcode test'),
