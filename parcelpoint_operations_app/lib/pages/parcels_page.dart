@@ -51,13 +51,6 @@ class _ParcelPageState extends State<ParcelPage> {
       milkrunName: 'EASTER SUBURBS',
     ),
     Parcel(
-      externalId: 'PPSZ35K5',
-      consignmentRef: '00991234049102',
-      type: 'COLLECT_INITIAL_RETAILER',
-      agentName: 'Parcelpoint HQ',
-      milkrunName: 'EASTER SUBURBS',
-    ),
-    Parcel(
       externalId: 'PPSZ36K6',
       consignmentRef: '00991234049505',
       type: 'RETURNS',
@@ -69,21 +62,30 @@ class _ParcelPageState extends State<ParcelPage> {
   Parcel _scanedParcel = Parcel(
     externalId: 'PPSZ33K3',
     consignmentRef: '00991234049706',
-    type: 'OTHER',
+    type: 'DELIVERY',
     agentName: 'Bondi Junction Parcelpoint',
     milkrunName: 'SYDNEY CBD',
   );
 
   // methods
+  void _addParcel(Parcel parcel) {
+    setState(() {
+      _parcels.add(parcel);
+    });
+  }
+
   Future _scanBarcode() async {
     try {
-      ScanResult barcode = await BarcodeScanner.scan();
+      ScanResult barcodeScanned = await BarcodeScanner.scan();
       if (mounted) {
-        setState(() {
-          _barcode = barcode.rawContent;
-        });
-        // await _showScanDialog(barcode.rawContent);
-        await _showScanDialog(context, barcode.rawContent);
+        if (barcodeScanned.rawContent.isNotEmpty) {
+          setState(() {
+            _barcode = barcodeScanned.rawContent;
+            _scanedParcel.consignmentRef = barcodeScanned.rawContent;
+            _addParcel(_scanedParcel);
+          });
+          _showScanDialog(context, _scanedParcel);
+        }
       }
     } catch (e) {
       setState(() {
@@ -92,8 +94,7 @@ class _ParcelPageState extends State<ParcelPage> {
     }
   }
 
-  void _showScanDialog(BuildContext ctx, String barcode) {
-    _scanedParcel.consignmentRef = barcode;
+  void _showScanDialog(BuildContext ctx, Parcel parcel) {
     showModalBottomSheet(
         context: ctx,
         shape: RoundedRectangleBorder(
@@ -104,6 +105,7 @@ class _ParcelPageState extends State<ParcelPage> {
           return ScanDialog(
             context: context,
             parcel: _scanedParcel,
+            scan: _scanBarcode,
           );
         });
   }
@@ -151,8 +153,8 @@ class _ParcelPageState extends State<ParcelPage> {
               ),
             ),
       floatingActionButton: FloatingActionButton(
-        onPressed: () => _showScanDialog(context, 'barcode test'),
-        // onPressed: _scanBarcode,
+        // onPressed: () => _showScanDialog(context, 'barcode test'),
+        onPressed: _scanBarcode,
         tooltip: 'Scan',
         child: iconScan,
       ),

@@ -12,6 +12,7 @@ class ScanDialog extends StatelessWidget {
   );
   final Parcel parcel;
   final BuildContext context;
+  final Function scan;
 
   // getters
   TextStyle get parcelTypeStyle {
@@ -53,10 +54,14 @@ class ScanDialog extends StatelessWidget {
   }
 
   // constructors
-  ScanDialog({this.parcel, this.context});
+  ScanDialog({this.parcel, this.context, this.scan});
 
   // methods
   void _close(context) => Navigator.of(context).pop();
+  void _handleScan() {
+    _close(context);
+    scan();
+  }
 
   // render
   @override
@@ -140,7 +145,7 @@ class ScanDialog extends StatelessWidget {
                 ),
                 RaisedButton(
                   child: iconScan,
-                  onPressed: () {},
+                  onPressed: _handleScan,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(18.0),
                   ),
