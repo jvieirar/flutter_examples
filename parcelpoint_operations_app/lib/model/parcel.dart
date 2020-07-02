@@ -8,6 +8,7 @@ class Parcel {
   String consignmentRef;
   String type;
   String agentName;
+  String agentId;
   String milkrunName;
   DateTime scannedOn = DateTime.now();
 
@@ -36,6 +37,10 @@ class Parcel {
     }
   }
 
+  String get displayMilkrunName {
+    return milkrunName.toUpperCase();
+  }
+
   // constructors
   Parcel({
     @required this.externalId,
@@ -44,5 +49,6 @@ class Parcel {
     @required this.agentName,
     @required this.milkrunName,
     this.scannedOn,
+    this.agentId,
   });
 }

@@ -6,6 +6,7 @@ import '../model/parcel.dart';
 import '../widgets/parcel_list_item.dart';
 import '../widgets/scan_dialog.dart';
 import '../shared/icons.dart';
+import '../service/parcel_service.dart';
 
 class ParcelPage extends StatefulWidget {
   ParcelPage({Key key, this.title}) : super(key: key);
@@ -18,7 +19,6 @@ class ParcelPage extends StatefulWidget {
 
 class _ParcelPageState extends State<ParcelPage> {
   // properties
-
   String _barcode = '';
 
   List<Parcel> _parcels = [
@@ -59,8 +59,11 @@ class _ParcelPageState extends State<ParcelPage> {
     ),
   ];
 
+  ParcelService _parcelService = ParcelService();
+
   Parcel _scanedParcel = Parcel(
-    externalId: 'PPSZ33K3',
+    // externalId: 'PPSZ33K3',
+    externalId: '',
     consignmentRef: '00991234049706',
     type: 'DELIVERY',
     agentName: 'Bondi Junction Parcelpoint',
@@ -79,6 +82,24 @@ class _ParcelPageState extends State<ParcelPage> {
       ScanResult barcodeScanned = await BarcodeScanner.scan();
       if (mounted) {
         if (barcodeScanned.rawContent.isNotEmpty) {
+          // call parcel search api
+          String agentId = '2010-06';
+          String agentName = '';
+
+          // call milkrun api
+          try {
+            var milkrunName =
+                await _parcelService.getMilkrunNameByAgentId(agentId);
+            print('Milkrun name: $milkrunName');
+            setState(() {
+              _scanedParcel.milkrunName = milkrunName;
+              _scanedParcel.agentName = agentName;
+              _scanedParcel.agentId = agentId;
+            });
+          } catch (err) {
+            print(err);
+          }
+
           setState(() {
             _barcode = barcodeScanned.rawContent;
             _scanedParcel.consignmentRef = barcodeScanned.rawContent;

@@ -79,7 +79,7 @@ class ParcelListItem extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      parcel.milkrunName,
+                      parcel.displayMilkrunName,
                       style: TextStyle(
                           fontWeight: FontWeight.bold, color: Colors.black),
                     ),

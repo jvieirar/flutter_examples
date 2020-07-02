@@ -66,96 +66,101 @@ class ScanDialog extends StatelessWidget {
   // render
   @override
   Widget build(BuildContext context) {
-    return Container(
-      height: 250,
-      child: Column(
-        children: [
-          Container(
-            height: 35,
-            child: IconButton(
-              icon: Icon(
-                Icons.keyboard_arrow_down,
-                size: 32,
-              ),
-              onPressed: () => _close(context),
-            ),
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(
-                children: [
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Container(
-                        padding: EdgeInsets.symmetric(
-                            horizontal: 4.0, vertical: 1.0),
-                        decoration: parcelTypeContainerStyle,
-                        child: Text(
-                          parcel.milkrunName,
-                          style: parcelTypeStyle,
-                        ),
-                      ),
-                      Text(
-                        parcel.displayId,
-                        style: TextStyle(color: Colors.grey),
-                      ),
-                    ],
-                  ),
-                  Expanded(
-                    child: Padding(
-                      padding: const EdgeInsets.only(top: 12.0, bottom: 12.0),
-                      child: Text(
-                        'Terry White Chemmart Chatswood Chase Parcelpoint',
-                        style: TextStyle(fontSize: 20),
-                      ),
+    return parcel.externalId == null || parcel.externalId.isEmpty
+        ? Center(
+            child: CircularProgressIndicator(),
+          )
+        : Container(
+            height: 250,
+            child: Column(
+              children: [
+                Container(
+                  height: 35,
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.keyboard_arrow_down,
+                      size: 32,
                     ),
+                    onPressed: () => _close(context),
                   ),
-                  Container(
-                    padding:
-                        EdgeInsets.symmetric(horizontal: 10.0, vertical: 5.0),
-                    decoration: parcelTypeBigContainerStyle,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                ),
+                Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
                       children: [
-                        if (parcel.type == 'DELIVERY') _iconLocalDelivery,
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Container(
+                              padding: EdgeInsets.symmetric(
+                                  horizontal: 4.0, vertical: 1.0),
+                              decoration: parcelTypeContainerStyle,
+                              child: Text(
+                                parcel.displayMilkrunName,
+                                style: parcelTypeStyle,
+                              ),
+                            ),
+                            Text(
+                              parcel.displayId,
+                              style: TextStyle(color: Colors.grey),
+                            ),
+                          ],
+                        ),
+                        Expanded(
+                          child: Padding(
+                            padding:
+                                const EdgeInsets.only(top: 12.0, bottom: 12.0),
+                            child: Text(
+                              'Terry White Chemmart Chatswood Chase Parcelpoint',
+                              style: TextStyle(fontSize: 20),
+                            ),
+                          ),
+                        ),
                         Container(
-                          margin: EdgeInsets.only(left: 8.0),
-                          child: Text(
-                            parcel.parsedType,
-                            style: parcelTypeBigStyle,
+                          padding: EdgeInsets.symmetric(
+                              horizontal: 10.0, vertical: 5.0),
+                          decoration: parcelTypeBigContainerStyle,
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              if (parcel.type == 'DELIVERY') _iconLocalDelivery,
+                              Container(
+                                margin: EdgeInsets.only(left: 8.0),
+                                child: Text(
+                                  parcel.parsedType,
+                                  style: parcelTypeBigStyle,
+                                ),
+                              ),
+                            ],
                           ),
                         ),
                       ],
                     ),
                   ),
-                ],
-              ),
-            ),
-          ),
-          Container(
-            padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                FlatButton(
-                  child: Text('Cancel'),
-                  onPressed: () => _close(context),
                 ),
-                RaisedButton(
-                  child: iconScan,
-                  onPressed: _handleScan,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(18.0),
+                Container(
+                  padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 8.0),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.end,
+                    children: [
+                      FlatButton(
+                        child: Text('Cancel'),
+                        onPressed: () => _close(context),
+                      ),
+                      RaisedButton(
+                        child: iconScan,
+                        onPressed: _handleScan,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(18.0),
+                        ),
+                        color: Theme.of(context).accentColor,
+                      ),
+                    ],
                   ),
-                  color: Theme.of(context).accentColor,
-                ),
+                )
               ],
             ),
-          )
-        ],
-      ),
-    );
+          );
   }
 }
