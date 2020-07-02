@@ -13,12 +13,25 @@ dependencies:
     sdk: flutter
   # cupertino_icons: ^0.1.3
   barcode_scan: ^3.0.1
-  flutter_svg:
+  flutter_svg: ^0.18.0
   # dartx: ^0.4.2
+# dependency_overrides:
+#   xml: '^4.1.0'
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+
+# uncomment it to generate icons but keep it commented to run the app. It's not compatible with flutter_svg
+# if the build fails, run flutter clean && flutter pub get
+#   flutter_launcher_icons: ^0.7.5
+
+# flutter_icons:
+#   android: true
+#   ios: true
+#   image_path: 'assets_dev/images/parcelpoint-stamp.png'
+#   adaptive_icon_background: '#000'
+#   adaptive_icon_foreground: 'assets_dev/images/parcelpoint-stamp.png'
 
 # The following section is specific to Flutter.
 flutter:
