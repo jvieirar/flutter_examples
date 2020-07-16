@@ -38,7 +38,7 @@ class Parcel {
   }
 
   String get displayMilkrunName {
-    return milkrunName.toUpperCase();
+    return milkrunName?.toUpperCase();
   }
 
   // constructors
@@ -47,7 +47,7 @@ class Parcel {
     @required this.type,
     @required this.consignmentRef,
     @required this.agentName,
-    @required this.milkrunName,
+    this.milkrunName,
     this.scannedOn,
     this.agentId,
   });

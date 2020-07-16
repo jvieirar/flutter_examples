@@ -92,15 +92,17 @@ class ScanDialog extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
-                            Container(
-                              padding: EdgeInsets.symmetric(
-                                  horizontal: 4.0, vertical: 1.0),
-                              decoration: parcelTypeContainerStyle,
-                              child: Text(
-                                parcel.displayMilkrunName,
-                                style: parcelTypeStyle,
+                            if (parcel.displayMilkrunName != null &&
+                                parcel.displayMilkrunName.isNotEmpty)
+                              Container(
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 4.0, vertical: 1.0),
+                                decoration: parcelTypeContainerStyle,
+                                child: Text(
+                                  parcel.displayMilkrunName,
+                                  style: parcelTypeStyle,
+                                ),
                               ),
-                            ),
                             Text(
                               parcel.displayId,
                               style: TextStyle(color: Colors.grey),

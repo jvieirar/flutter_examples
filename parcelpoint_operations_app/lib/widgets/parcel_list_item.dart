@@ -78,11 +78,13 @@ class ParcelListItem extends StatelessWidget {
                         style: parcelTypeStyle,
                       ),
                     ),
-                    Text(
-                      parcel.displayMilkrunName,
-                      style: TextStyle(
-                          fontWeight: FontWeight.bold, color: Colors.black),
-                    ),
+                    if (parcel.displayMilkrunName != null &&
+                        parcel.displayMilkrunName.isNotEmpty)
+                      Text(
+                        parcel.displayMilkrunName,
+                        style: TextStyle(
+                            fontWeight: FontWeight.bold, color: Colors.black),
+                      ),
                   ],
                 ),
               )

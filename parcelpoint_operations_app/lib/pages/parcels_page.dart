@@ -34,7 +34,7 @@ class _ParcelPageState extends State<ParcelPage> {
       consignmentRef: '00991234049305',
       type: 'COLLECT_INITIAL_RETAILER',
       agentName: 'Randwick Parcelpoint',
-      milkrunName: 'INNER WEST',
+      // milkrunName: 'INNER WEST',
     ),
     Parcel(
       externalId: 'PPSZ39T6',
@@ -61,7 +61,7 @@ class _ParcelPageState extends State<ParcelPage> {
 
   ParcelService _parcelService = ParcelService();
 
-  Parcel _scanedParcel = Parcel(
+  Parcel _selectedParcel = Parcel(
     // externalId: 'PPSZ33K3',
     externalId: '',
     consignmentRef: '00991234049706',
@@ -82,30 +82,52 @@ class _ParcelPageState extends State<ParcelPage> {
       ScanResult barcodeScanned = await BarcodeScanner.scan();
       if (mounted) {
         if (barcodeScanned.rawContent.isNotEmpty) {
-          // call parcel search api
-          String agentId = '2010-06';
-          String agentName = '';
-
-          // call milkrun api
           try {
-            var milkrunName =
-                await _parcelService.getMilkrunNameByAgentId(agentId);
-            print('Milkrun name: $milkrunName');
-            setState(() {
-              _scanedParcel.milkrunName = milkrunName;
-              _scanedParcel.agentName = agentName;
-              _scanedParcel.agentId = agentId;
-            });
-          } catch (err) {
-            print(err);
-          }
+            // call parcel search api
+            var newParcel = await _parcelService
+                .getParcelInfoByConsigment(barcodeScanned.rawContent);
 
-          setState(() {
-            _barcode = barcodeScanned.rawContent;
-            _scanedParcel.consignmentRef = barcodeScanned.rawContent;
-            _addParcel(_scanedParcel);
-          });
-          _showScanDialog(context, _scanedParcel);
+            print('Got parcel: ${newParcel.externalId}');
+            if (newParcel?.externalId != null) {
+              // call milkrun api
+              try {
+                var milkrunName = await _parcelService
+                    .getMilkrunNameByAgentId(newParcel.agentId);
+                newParcel.milkrunName = milkrunName;
+                print(
+                    'Milkrun "$milkrunName" fetched correctly for parcel "${newParcel.externalId}"');
+                // var newParcel = Parcel(
+                //     agentName: agentName,
+                //     externalId: agentId,
+                //     agentId: agentId,
+                //     consignmentRef: barcodeScanned.rawContent,
+                //     milkrunName: milkrunName,
+                //     type: 'DELIVERY');
+              } catch (error) {
+                print(error);
+              }
+
+              setState(() {
+                _barcode = barcodeScanned.rawContent;
+                _selectedParcel = newParcel;
+                _addParcel(newParcel);
+              });
+
+              try {
+                _parcelService.markAsSorted(newParcel.externalId);
+              } catch (error) {
+                // status change error
+                print(
+                    'Got error changing status for parcel ${newParcel.externalId}');
+              }
+
+              _showScanDialog(context, _selectedParcel);
+            }
+          } catch (error) {
+            // parcel search error
+            print('Error on parcel search');
+            print(error);
+          }
         }
       }
     } catch (e) {
@@ -125,7 +147,7 @@ class _ParcelPageState extends State<ParcelPage> {
         builder: (bCtx) {
           return ScanDialog(
             context: context,
-            parcel: _scanedParcel,
+            parcel: _selectedParcel,
             scan: _scanBarcode,
           );
         });
@@ -133,7 +155,7 @@ class _ParcelPageState extends State<ParcelPage> {
 
   void _handleParcelOnPress(Parcel parcel) {
     setState(() {
-      _scanedParcel = parcel;
+      _selectedParcel = parcel;
     });
     _showScanDialog(context, parcel);
   }
