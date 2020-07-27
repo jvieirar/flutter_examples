@@ -20,10 +20,10 @@ class MyApp extends StatelessWidget {
         // primaryColor: Colors.black,
         accentColor: Colors.orange,
         visualDensity: VisualDensity.adaptivePlatformDensity,
-        fontFamily: 'Scandia',
+        // fontFamily: 'Scandia',
         textTheme: ThemeData.light().textTheme.copyWith(
               headline6: TextStyle(
-                fontFamily: 'Scandia',
+                // fontFamily: 'Scandia',
                 fontWeight: FontWeight.bold,
                 fontSize: 18,
               ),
@@ -31,7 +31,7 @@ class MyApp extends StatelessWidget {
         appBarTheme: AppBarTheme(
           textTheme: ThemeData.light().textTheme.copyWith(
                 headline6: TextStyle(
-                  fontFamily: 'Scandia',
+                  // fontFamily: 'Scandia',
                   // fontWeight: FontWeight.bold,
                   fontSize: 28,
                 ),
@@ -98,6 +98,12 @@ class _MyHomePageState extends State<MyHomePage> {
     });
   }
 
+  void _deleteTransaction(String id) {
+    setState(() {
+      _userTransactions.removeWhere((element) => element.id == id);
+    });
+  }
+
   void _startANewTransaction(BuildContext ctx) {
     showModalBottomSheet(
         context: ctx,
@@ -125,7 +131,10 @@ class _MyHomePageState extends State<MyHomePage> {
           // crossAxisAlignment: CrossAxisAlignment.stretch,
           children: <Widget>[
             ExpensesChart(_recentTransactions),
-            TransactionList(_userTransactions),
+            TransactionList(
+              transactions: _userTransactions,
+              onDeleteTransaction: _deleteTransaction,
+            ),
           ],
         ),
       ),

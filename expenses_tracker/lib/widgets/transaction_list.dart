@@ -6,9 +6,10 @@ import '../model/transaction.dart';
 class TransactionList extends StatelessWidget {
   // properties
   final List<Transaction> transactions;
+  final Function onDeleteTransaction;
 
   // constructors
-  TransactionList(this.transactions);
+  TransactionList({this.transactions, this.onDeleteTransaction});
 
   // methods
 
@@ -63,6 +64,13 @@ class TransactionList extends StatelessWidget {
                       fontSize: 14,
                       color: Colors.grey,
                     ),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.delete),
+                    color: Theme.of(context).errorColor,
+                    onPressed: () {
+                      onDeleteTransaction(transactions[index].id);
+                    },
                   ),
                 ),
               ),

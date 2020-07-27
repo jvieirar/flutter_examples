@@ -6,7 +6,7 @@
   "configurations": [
     {
       "name": "Dart",
-      "program": "parcelpoint_operations_app/lib/main.dart",
+      "program": "expenses_tracker/lib/main.dart",
       "request": "launch",
       "type": "dart"
     }
